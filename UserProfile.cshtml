@@ -1,0 +1,216 @@
+﻿@model MarkInfotech.Models.tbl_user
+
+@{
+    ViewBag.Title = "UserProfile";
+}
+<head>
+    <link href="~/Content/RegisterStyleSheet/ProfileStyleSheet1.css" rel="stylesheet" />
+</head>
+<br /><br /><br />
+@using (Html.BeginForm("UserProfile", "Home", FormMethod.Post, new { @class="form-horizontal" , enctype="multipart/form-data"}))  
+{
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div cass="user-Profile-image">
+                                <input type="file" class="hidden" id="BrowseImage" accept="image/" name="UserImageFile"/>
+
+                                <img src="@Url.Content(Model.ImagePath)" class="img-responsive" id="UserImage"/>
+                                @*<p class="image-desc text-center">Allowed Image Size: 2500*2500</p>*@
+                                
+                                <div class="upload-photo">
+            @*<img src="~/Content/images/pngtree-camera-icon-vector-illustration-in-line-style-for-any-purpose-png-image_989668.jpg" class="img-responsive" />*@
+        </div>
+                            </div>
+
+                            <div class="remove-photo">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-8">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            @Html.HiddenFor(Model => Model.userid)
+                            @Html.HiddenFor(Model => Model.ImagePath)
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <label class="radio-inline">
+                                        @Html.RadioButtonFor(model => model.gender, "Male", new { @name = "gender" })
+                                        Male
+                                    </label>
+
+                                    <label class="radio-inline">
+                                        @Html.RadioButtonFor(model => model.gender, "Female", new { @name = "gender" })
+                                        Female
+                                    </label>
+                                    @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2">
+                                    Languages
+                                </label>
+                                <lable class="checkbox-inline">
+                                    @Html.CheckBox("Csharp", Model.isinterestedinC_.Value)
+                                    C#
+                                </lable>
+                                <lable class="checkbox-inline">
+                                    @Html.CheckBox("Java", Model.isinterestedinjava.Value)
+                                    Java
+                                </lable>
+                                <lable class="checkbox-inline">
+                                    @Html.CheckBox("Python", Model.isinterestedinpython.Value)
+                                    Python
+                                </lable>
+                            </div>
+
+                            @*//using easy way for creating checkbox*@
+                            @*<div class="form-group">
+            <label class="control-label col-md-2">
+                Languages
+            </label>
+            <lable class="checkbox-inline">
+                @Html.CheckBox("Csharp",false)
+                C#
+            </lable>
+            <lable class="checkbox-inline">
+                @Html.CheckBox("Java",false)
+                Java
+            </lable>
+            <lable class="checkbox-inline">
+                @Html.CheckBox("Python",false)
+                Python
+            </lable>
+        </div>*@
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2">
+                                    City
+                                </label>
+                                <div class="col-md-10">
+                                    @*@Html.DropDownListFor(model => model.cityid, ViewBag.cityList as SelectList, "--Select City--",
+                new { @class="form-control"})*@
+
+                                    @Html.DropDownListFor(model => model.cityid, Model.CityList as SelectList, "--Select City--",
+                                  new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control"} })
+                                    @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Submit" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $('#UserImage').click(function () {
+        UploadClickEvent();
+    });
+
+    $('.Upload-photo').click(function () {
+        UploadClickEvent();
+    });
+
+    function UploadClickEvent() {
+        $('#BrowseImage').trigger('click');
+    }
+
+    //Select & Upload Image
+    $('#BrowseImage').change(function () {
+        var File = this.files;
+
+        if (File && File[0]) {
+            var reader = new FileReader();
+            reader.readAsDataURL(File[0]);
+
+            reader.onload = function (x) {
+                var image = new Image;
+
+                image.src = x.target.result;
+                image.onload = function () {
+
+                    var width = this.width;
+                    var height = this.height;
+                    var type = File[0].type;
+
+                    //(width == "2280" && height == "1950") &&
+                    if ((type == "image/png" || type == "image/jpg" || type == "image/jpeg")) {
+                        $('#UserImage').attr('src', x.target.result);
+                        $('.image-desc').css("color", "black");
+                    }
+                    else {
+                        $('.image-desc').css("color", "red");
+                    }
+
+                    //alert("width: " + width + ", height: " + height + ", type: " + type);
+                }
+            }
+        }
+    });
+
+    //remove photo
+    $('.remove-photo').click(function () {
+        $('#UserImage').attr('src', "/Content/images/camera.png"); 
+
+        $('#ImagePath').val("/Content/images/images.png")
+    });
+        
+    //    if (this.files && this.files[0])
+    //    {
+    //        var fileReader = new FileReader();
+    //        fileReader.readAsDataURL(this.files[0]);
+
+    //        fileReader.onload = function (x) {
+    //            $('#UserImage').attr('src', x.target.result);
+    //        }
+    //    }
+    //});
+
+    ////remove photo
+    //$('.remove-photo').click(function () {
+    //    $('#UserImage').attr('src', "/Content/images/camera.png");
+    //});
+</script>
